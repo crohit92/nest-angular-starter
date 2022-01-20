@@ -2,7 +2,8 @@ import { Global, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { MongooseModule } from '@nestjs/mongoose';
-import { environment } from '../../environments/environment';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { JWTStrategy } from './auth-strategies/jwt-strategy.service';
 import { AuthService } from './services/auth.service';
@@ -13,14 +14,29 @@ import { AuthSchemaModule } from './helper-modules/auth-schema.module';
 @Module({
   imports: [
     PassportModule,
-    JwtModule.register({
-      secret: environment.jwtSecret,
-      signOptions: {
-        expiresIn: '4h',
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => {
+        return {
+          secret: config.get<string>('JWT_SECRET'),
+          signOptions: {
+            expiresIn: '4h',
+          },
+        };
       },
     }),
-    MongooseModule.forRoot('mongodb://localhost:27017/mca?replicaSet=rs0'),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => {
+        return {
+          uri: config.get<string>('MONGO_HOST'),
+        };
+      },
+    }),
     AuthSchemaModule,
+    ConfigModule.forRoot(),
   ],
   providers: [
     JWTStrategy,
