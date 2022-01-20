@@ -1,0 +1,36 @@
+<div class="container">
+  <div
+    class="vstack justify-content-center border rounded p-5 login-container mt-5 mx-auto"
+    [formGroup]="loginForm"
+  >
+    <h1>Login</h1>
+    <mat-form-field class="w-100">
+      <mat-label>Username</mat-label>
+      <input
+        formControlName="username"
+        matInput
+        placeholder="Enter email id/username"
+      />
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <mat-label>Password</mat-label>
+      <input
+        formControlName="password"
+        type="password"
+        matInput
+        placeholder="Enter your password"
+      />
+    </mat-form-field>
+    <div class="vstack gap-3">
+      <button
+        [disabled]="loginForm?.invalid"
+        mat-raised-button
+        color="primary"
+        (click)="login()"
+      >
+        Login
+      </button>
+      <!-- <button mat-button color="warn">Reset</button> -->
+    </div>
+  </div>
+</div>
