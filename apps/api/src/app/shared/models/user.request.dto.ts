@@ -1,7 +1,7 @@
 import { Prop, Schema } from '@nestjs/mongoose';
 @Schema()
 export class User {
-  id!: string;
+  _id: string;
   @Prop()
   name?: string;
   @Prop()

@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginResponse } from '@bg-ng/api-interfaces';
 import { tap } from 'rxjs';
 import { StorageService } from '../core/services/utilities/storage.service';
 import { StorageKeys } from '../shared/constants/storage-keys';
+import { LoginResponse } from '../shared/models/login.response';
 
 @Injectable()
 export class LoginService {

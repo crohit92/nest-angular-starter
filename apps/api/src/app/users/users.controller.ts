@@ -9,15 +9,12 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { JwtAuthGuard } from '../core/guards/jwt-auth.guard';
-import {
-  User,
-  LoginResponse,
-  CreateUser,
-  Credentials,
-} from '@bg-ng/api-interfaces';
 import { AuthService } from '../core/services/auth.service';
 import { ApiTagsAndBearer } from '../core/decorators/api-bearer-tag.decorator';
 import { LocalAuthGuard } from '../core/guards/local-auth.guard';
+import { CreateUser, User } from '../shared/models/user.request.dto';
+import { Credentials } from '../shared/models/credentials.request.dto';
+import { LoginResponse } from '../shared/models/login.response.dto';
 
 @ApiTagsAndBearer('Auth')
 @Controller('users')
@@ -41,7 +38,7 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
-  async getMyProfile(@Req() req: Request) {
-    return req.user;
+  async getMyProfile(@Req() req: Request): Promise<User> {
+    return await this.service.getUserByUsername((req.user as User)?.username);
   }
 }

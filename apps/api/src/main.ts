@@ -33,10 +33,10 @@ async function bootstrap() {
       },
       'access-token'
     )
-    .setTitle('Engie Background Service')
-    .setDescription('Engie background service')
+    .setTitle('API Service')
+    .setDescription('API Service')
     .setVersion('1.0')
-    .addTag('Engie')
+    .addTag('API')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

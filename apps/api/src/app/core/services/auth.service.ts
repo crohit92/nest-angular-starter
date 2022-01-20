@@ -2,10 +2,10 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { compare, hash } from 'bcrypt';
 import { join } from 'path';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '@bg-ng/api-interfaces';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Document } from 'mongoose';
 import { TransactionService } from './transaction.service';
+import { User } from '../../shared/models/user.request.dto';
 
 @Injectable()
 export class AuthService {
@@ -55,7 +55,7 @@ export class AuthService {
     const user = await this.getUserByUsername(credentials.username);
     if (user && (await compare(credentials.password, user.password))) {
       return {
-        id: user.id,
+        _id: user._id,
         name: user.name,
         email: user.email,
         username: user.username,
@@ -67,7 +67,7 @@ export class AuthService {
   async getJwtToken(user: Partial<User>) {
     const payload = {
       username: user.username,
-      sub: user.id,
+      sub: user._id,
     };
     return await this.jwtService.signAsync(payload);
   }

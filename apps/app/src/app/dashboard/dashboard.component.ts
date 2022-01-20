@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { LoginResponse, User } from '@bg-ng/api-interfaces';
+import { User } from '../shared/models/user';
 
 @Component({
   selector: 'bg-ng-dashboard',

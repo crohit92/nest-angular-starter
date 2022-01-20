@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
 import { environment } from '../../../environments/environment';
-import { User } from '@bg-ng/api-interfaces';
+import { User } from '../../shared/models/user.request.dto';
 import { AuthService } from '../services/auth.service';
 
 @Injectable()
